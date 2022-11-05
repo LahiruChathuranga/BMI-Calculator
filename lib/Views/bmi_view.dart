@@ -1,5 +1,8 @@
 import 'dart:ui';
 import 'dart:math';
+import 'package:bmi_calculator/Components/gender_component.dart';
+import 'package:bmi_calculator/Components/height_component.dart';
+import 'package:bmi_calculator/Components/value_component.dart';
 import 'package:flutter/material.dart';
 
 class BMIView extends StatefulWidget {
@@ -12,7 +15,7 @@ class BMIView extends StatefulWidget {
 class _BMIViewState extends State<BMIView> {
   Color maleColor = Colors.white;
   Color feMaleColor = Colors.grey;
-  double height = 0;
+  double height = 150;
   double weight = 0;
   double age = 0;
 
@@ -32,254 +35,51 @@ class _BMIViewState extends State<BMIView> {
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               children: [
-                Expanded(
-                  child: GestureDetector(
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.18,
-                      color: Color(0xFF101427),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Icon(
-                            Icons.male,
-                            color: maleColor,
-                            size: MediaQuery.of(context).size.height * 0.1,
-                          ),
-                          Text(
-                            'MALE',
-                            style: TextStyle(
-                                color: maleColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      setState(() {
-                        // change color of the icon and text
-                        maleColor = Colors.white;
-                        feMaleColor = Colors.grey;
-                      });
-                    },
-                  ),
-                ),
+                GenderComponent(icon: Icons.male, name: 'MALE', color: maleColor, onTap: () {
+                  setState(() {
+                    maleColor = Colors.white;
+                    feMaleColor = Colors.grey;
+                  });
+                },),
                 SizedBox(
                   width: 8,
                 ),
-                Expanded(
-                  child: GestureDetector(
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.18,
-                      color: Color(0xFF101427),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Icon(
-                            Icons.female,
-                            color: feMaleColor,
-                            size: MediaQuery.of(context).size.height * 0.1,
-                          ),
-                          Text(
-                            'FEMALE',
-                            style: TextStyle(
-                                color: feMaleColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      setState(() {
-                        // change the color of the icon and the text
-                        feMaleColor = Colors.white;
-                        maleColor = Colors.grey;
-                      });
-                    },
-                  ),
-                )
+                GenderComponent(icon: Icons.male, name: 'FEMALE', color: feMaleColor, onTap: () {
+                  setState(() {
+                    maleColor = Colors.grey;
+                    feMaleColor = Colors.white;
+                  });
+                },),
               ],
             ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.22,
-              width: MediaQuery.of(context).size.width,
-              color: Color(0xFF101427),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    'HEIGHT',
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        height.toInt().toString(),
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: MediaQuery.of(context).size.height * 0.05,
-                            fontWeight: FontWeight.w900),
-                      ),
-                      Text(
-                        'cm',
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: MediaQuery.of(context).size.height * 0.03,
-                            fontWeight: FontWeight.normal),
-                      )
-                    ],
-                  ),
-                  Slider(
-                      min: 0,
-                      max: 200,
-                      value: height,
-                      thumbColor: Color(0xFFea1556),
-                      activeColor: Color(0xFFfefeff),
-                      onChanged: (value) {
-                        setState(() {
-                          height = value;
-                        });
-                      })
-                ],
-              ),
+            child: HeightComponent(
+              valueChanged: (value){
+                setState(() {
+                  height = value;
+                });
+              },
             ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Row(
               children: [
-                Expanded(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.25,
-                    color: Color(0xFF101427),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          'WEIGHT',
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          weight.toInt().toString(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.05,
-                              fontWeight: FontWeight.w900),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            GestureDetector(
-                              child: CircleAvatar(
-                                backgroundColor: Color(0xFF1c2033),
-                                radius: 30,
-                                child: Icon(
-                                  Icons.remove,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  if (weight > 0) {
-                                    weight = weight - 1;
-                                  }
-                                });
-                              },
-                            ),
-                            GestureDetector(
-                              child: CircleAvatar(
-                                backgroundColor: Color(0xFF1c2033),
-                                radius: 30,
-                                child: Icon(Icons.add, color: Colors.white),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  weight = weight + 1;
-                                });
-                              },
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                ValueComponent(name: 'WEIGHT', valueChanged: (value){
+                  setState(() {
+                    weight = double.parse(value.toString());
+                  });
+                }),
                 SizedBox(
                   width: 8,
                 ),
-                Expanded(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.25,
-                    color: Color(0xFF101427),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          'AGE',
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          age.toInt().toString(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize:
-                                  MediaQuery.of(context).size.height * 0.05,
-                              fontWeight: FontWeight.w900),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            GestureDetector(
-                              child: CircleAvatar(
-                                backgroundColor: Color(0xFF1c2033),
-                                radius: 30,
-                                child: Icon(
-                                  Icons.remove,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  if (age > 0) {
-                                    age = age - 1;
-                                  }
-                                });
-                              },
-                            ),
-                            GestureDetector(
-                              child: CircleAvatar(
-                                backgroundColor: Color(0xFF1c2033),
-                                radius: 30,
-                                child: Icon(Icons.add, color: Colors.white),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  age = age + 1;
-                                });
-                              },
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                )
+                ValueComponent(name: 'AGE', valueChanged: (value){
+                  setState(() {
+                    age = double.parse(value.toString());
+                  });
+                })
               ],
             ),
           ),
@@ -301,9 +101,12 @@ class _BMIViewState extends State<BMIView> {
             ),
             onTap: () {
               // calculate BMI here
-              num heightSqre = pow(height / 100, 2);
-              double BMI = weight / heightSqre;
+              num heightbytwo = pow(height / 100, 2);
+              print(height.toString());
+              print(weight.toString());
+              double BMI = weight / heightbytwo;
               print(BMI.toStringAsFixed(1));
+              
             },
           )
         ],
