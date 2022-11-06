@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:bmi_calculator/Components/gender_component.dart';
 import 'package:bmi_calculator/Components/height_component.dart';
 import 'package:bmi_calculator/Components/value_component.dart';
+import 'package:bmi_calculator/Views/result_view.dart';
 import 'package:flutter/material.dart';
 
 class BMIView extends StatefulWidget {
@@ -18,6 +19,7 @@ class _BMIViewState extends State<BMIView> {
   double height = 150;
   double weight = 0;
   double age = 0;
+  bool isShowResult = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,9 @@ class _BMIViewState extends State<BMIView> {
         backgroundColor: Color(0xFF090c22),
         leading: Icon(Icons.menu),
       ),
-      body: Column(
+      body: isShowResult ? ResultView(onTap: (){ setState(() {
+        isShowResult = false;
+      }); }, height: height,weight: weight) : Column(
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -100,12 +104,10 @@ class _BMIViewState extends State<BMIView> {
               ),
             ),
             onTap: () {
+              setState(() {
+                isShowResult = true;
+              });
               // calculate BMI here
-              num heightbytwo = pow(height / 100, 2);
-              print(height.toString());
-              print(weight.toString());
-              double BMI = weight / heightbytwo;
-              print(BMI.toStringAsFixed(1));
               
             },
           )

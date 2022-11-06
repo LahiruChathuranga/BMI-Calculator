@@ -12,7 +12,7 @@ class ValueComponent extends StatefulWidget {
 }
 
 class _ValueComponentState extends State<ValueComponent> {
-  int value = 0;
+  int value = 30;
 
   @override
   Widget build(BuildContext context) {

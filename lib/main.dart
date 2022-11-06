@@ -1,5 +1,4 @@
 import 'package:bmi_calculator/Views/bmi_view.dart';
-import 'package:bmi_calculator/Views/result_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: ResultView(),
+      home: BMIView(),
     );
   }
 }
